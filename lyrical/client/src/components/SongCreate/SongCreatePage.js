@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { graphql } from 'react-apollo';
+import {Link, useNavigate} from 'react-router-dom';
+import { graphql } from '@apollo/client/react/hoc';
 
 import fetchSongsQuery from '../../shared/graphql/fetchSongs';
 import addSongMutation from '../../shared/graphql/addSong';
+import deleteSongMutation from '../../shared/graphql/deleteSong';
 
 const SongCreate = props => {
-	const [ _title, _setTitle ] = useState('');
+	const [ title, setTitle ] = useState('');
 
-	const history = useHistory();
+	const history = useNavigate();
 
 	const handleOnChange = event => {
-		_setTitle(event.target.value);
+		setTitle(event.target.value);
 	};
 
 	const handleOnSubmit = event => {
@@ -19,7 +20,7 @@ const SongCreate = props => {
 		props
 			.mutate({
 				variables: {
-					title: _title
+					title: title
 				},
 				refetchQueries: () => [ { query: fetchSongsQuery } ],
 				awaitrefetch: true
@@ -35,7 +36,7 @@ const SongCreate = props => {
 			<h3>Create a New Song</h3>
 			<form onSubmit={handleOnSubmit}>
 				<label>Enter the Song Title:</label>
-				<input className='input-field' onChange={handleOnChange} value={_title} />
+				<input className='input-field' onChange={handleOnChange} value={title} />
 			</form>
 		</div>
 	);
