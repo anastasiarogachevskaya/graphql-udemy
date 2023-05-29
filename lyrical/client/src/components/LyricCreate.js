@@ -1,14 +1,10 @@
 import React, {useState} from "react";
 import {useMutation} from "@apollo/client";
 import ADD_LYRIC from "../queries/addLyric";
-import GET_SONG_BY_ID from "../queries/getSongByID";
-
 
 const LyricCreate = ({ id }) => {
   const [content, setContent] = useState('');
-  const [addLyric, { loading, error }] = useMutation(ADD_LYRIC, {
-    refetchQueries: [{ GET_SONG_BY_ID }]
-  });
+  const [addLyric] = useMutation(ADD_LYRIC);
 
   const onSubmit = (e) =>{
     e.preventDefault();

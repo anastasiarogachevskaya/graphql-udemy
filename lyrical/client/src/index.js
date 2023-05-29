@@ -14,7 +14,18 @@ import SongDetail from "./components/SongDetail";
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(
+    {
+      typePolicies: {
+        Song:{
+          keyFields: ["id"]
+        },
+        Lyrics: {
+          keyFields: ["id", "songId"]
+        }
+      }
+    }
+  ),
 });
 
 const App = () => {
